@@ -65,7 +65,7 @@ class Geogoogle():
 
 	def __init__(self, googlekey = None):
 		if not googlekey:
-			raise Exception("No key!")
+			raise RuntimeError("No key!")
 		self.key = googlekey
 
 
@@ -179,13 +179,13 @@ class Geogoogle():
 			#	logger.error ('\n--------------------------------------------------------------------')
 			#	logger.error ('ERROR: something wrong with either the service or the query.')
 			#	logger.error ('--------------------------------------------------------------------')
-			raise Exception("Check the key!")
+			raise RuntimeError("Check the key!")
 		except GeocoderQuotaExceeded:
 			#if self.SHOW_ERRORS:
 			#	logger.error ('\n--------------------------------------------------------------------')
 			#	logger.error ('ERROR: you have reached the end of your quota for the service.')
 			#	logger.error ('--------------------------------------------------------------------')
-			raise Exception("Quota limit reached!")
+			raise RuntimeError("Quota limit reached!")
 		except GeocoderTimedOut:
 			#if self.SHOW_ERRORS:
 			#	logger.error ('\n--------------------------------------------------------------------')
@@ -199,14 +199,14 @@ class Geogoogle():
 			#	logger.error ('\n--------------------------------------------------------------------')
 			#	logger.error ('ERROR: service unavailable or unknown error for the service.')
 			#	logger.error ('--------------------------------------------------------------------')
-			raise Exception("Service unavailable or unknown error for the service.")
+			raise RuntimeError("Service unavailable or unknown error for the service.")
 		except GeocoderNotFound:
 			#if self.SHOW_ERRORS:
 			#	logger.error ('\n--------------------------------------------------------------------')
 			#	logger.error ('ERROR: unknown service.')
 			#	logger.error ('check if this service still exists!')
 			#	logger.error ('--------------------------------------------------------------------')
-				raise Exception("Check if the service still exists!")
+				raise RuntimeError("Check if the service still exists!")
 		except Exception as e:				
 			#logger.error ('\n--------------------------------------------------------------------')
 			#logger.error("Unknown catastrophic error while processing address: {}".format(addr))
@@ -222,7 +222,7 @@ class Geogoogle():
 
 	def place(self, place_id = None):
 		if not place_id:
-			raise Exception("No place id!")
+			raise RuntimeError("No place id!")
 		
 		url = "https://maps.googleapis.com/maps/api/place/details/json?placeid={}&key={}".format(place_id, self.key)
 		results = requests.get(url)
@@ -235,17 +235,17 @@ class Geogoogle():
 		
 		if status != 'OK':
 			if status == 'ZERO_RESULTS':
-				raise Exception("No Results!")
+				raise RuntimeError("No Results!")
 			elif status == 'OVER_QUERY_LIMIT':
-				raise Exception("You have exceded your quota!")
+				raise RuntimeError("You have exceded your quota!")
 			elif status == 'REQUEST_DENIED':
-				raise Exception("Invalid key!")
+				raise RuntimeError("Invalid key!")
 			elif status == 'INVALID_REQUEST':
-				raise Exception("Check the place id!")
+				raise RuntimeError("Check the place id!")
 			elif status == 'NOT_FOUND':
-				raise Exception("No place with that id founded!")
+				raise RuntimeError("No place with that id founded!")
 			else:
-				raise Exception("Unknown Error!")
+				raise RuntimeError("Unknown Error!")
 	
 		if len(results['result']) > 0:  
 			answer = results['result']

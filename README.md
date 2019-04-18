@@ -4,7 +4,7 @@ Version: 0.0.1
 # Description
 * If sucesseful returns a json containing the geocoding and/or the place id info results, with **'status': 'OK'**. If not, returns json with **'status': 'UNABLE'**.
 * If no services are available, then an _OutOfServices_ exception will be throwed
-* In case of incorrect usage (e.g.: incorrect arguments) or some other catastrophic event, a general _Exception_ will be throwed
+* In case of incorrect usage (e.g.: incorrect arguments) or some other catastrophic event, a _RuntimeError_ or a _Exception_ will be throwed
 
 
 # Requirements
