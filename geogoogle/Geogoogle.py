@@ -257,7 +257,7 @@ class Geogoogle():
 				output["plus_code"] = answer.get('plus_code').get('global_code')	# open location code
 			if answer.get('geometry') and answer.get('geometry').get('location'):
 				output["lat"] = answer.get('geometry').get('location').get('lat')
-				output["lon"] = answer.get('geometry').get('location').get('lon')
+				output["lon"] = answer.get('geometry').get('location').get('lng')
 			if answer.get('address_components'):
 				output["postcode_place"] =  ",".join([x['long_name'] for x in answer.get('address_components') if 'postal_code' in x.get('types')])
 				output["street_number"] = ",".join([x['long_name'] for x in answer.get('address_components') if 'street_number' in x.get('types')]) # house number
